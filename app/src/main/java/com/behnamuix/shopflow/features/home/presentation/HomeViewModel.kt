@@ -3,7 +3,7 @@ package com.behnamuix.shopflow.features.home.presentation
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.behnamuix.shopflow.features.home.domain.usecase.ProductsUseCase
+import com.behnamuix.shopflow.features.home.domain.usecase.HomeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val productUseCase: ProductsUseCase,
+    private val productUseCase: HomeUseCase,
 ) : ViewModel() {
     private val _homeState = MutableStateFlow(HomeContract.HomeState())
     val homeState: StateFlow<HomeContract.HomeState> = _homeState.asStateFlow()
@@ -34,7 +34,7 @@ class HomeViewModel @Inject constructor(
                     isLoading = false,
                 )
             } catch (e: Exception) {
-                Log.d("PRODUCTS",_homeState.value.products.size.toString())
+
                 e.printStackTrace()
                 _homeState.value = _homeState.value.copy(
                     isLoading = false,

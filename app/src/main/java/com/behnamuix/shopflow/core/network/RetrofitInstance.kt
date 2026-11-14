@@ -15,7 +15,7 @@ object RetrofitProvider {
     // برای جلوگیری از تایم‌اوت سوکت موقع خواندن بدنه کامل پاسخ، لول لاگ روی HEADERS یا BASIC قرار می‌گیرد
     private val loggingInterceptor: HttpLoggingInterceptor by lazy {
         HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.HEADERS
+            level = HttpLoggingInterceptor.Level.BODY
         }
     }
 
