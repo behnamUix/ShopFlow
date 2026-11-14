@@ -44,8 +44,8 @@ val Typography = Typography(
         letterSpacing = 0.sp
     ),
     headlineSmall = TextStyle(
-        fontFamily = Bakh,
-        fontWeight = FontWeight.Normal,
+        fontFamily = Bakh_Fat,
+        fontWeight = FontWeight.ExtraBold,
         fontSize = 24.sp,
         lineHeight = 32.sp,
         letterSpacing = 0.sp

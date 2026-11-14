@@ -5,3 +5,4 @@ import androidx.compose.ui.text.font.FontFamily
 import com.behnamuix.shopflow.R
 
 val Bakh = FontFamily(Font(R.font.yekan_backh))
+val Bakh_Fat = FontFamily(Font(R.font.yekan_backh_fat))
