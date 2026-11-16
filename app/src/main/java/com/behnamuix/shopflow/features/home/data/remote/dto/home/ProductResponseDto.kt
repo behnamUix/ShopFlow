@@ -1,4 +1,4 @@
-package com.behnamuix.shopflow.features.home.data.remote.dto
+package com.behnamuix.shopflow.features.home.data.remote.dto.home
 
 import com.behnamuix.shopflow.features.home.domain.model.ProductDimensions
 import com.behnamuix.shopflow.features.home.domain.model.ProductModel

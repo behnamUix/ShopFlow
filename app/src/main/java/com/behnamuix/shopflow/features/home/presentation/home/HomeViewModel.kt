@@ -1,6 +1,5 @@
-package com.behnamuix.shopflow.features.home.presentation
+package com.behnamuix.shopflow.features.home.presentation.home
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.behnamuix.shopflow.features.home.domain.usecase.HomeUseCase
@@ -21,6 +20,7 @@ class HomeViewModel @Inject constructor(
     fun onAction(action: HomeContract.HomeAction) {
         when (action) {
             is HomeContract.HomeAction.GetProducts -> getProducts()
+            is HomeContract.HomeAction.GetCategories -> getCategory()
         }
     }
 
@@ -31,6 +31,26 @@ class HomeViewModel @Inject constructor(
                 val products = productUseCase.getProducts()
                 _homeState.value = _homeState.value.copy(
                     products = products,
+                    isLoading = false,
+                )
+            } catch (e: Exception) {
+
+                e.printStackTrace()
+                _homeState.value = _homeState.value.copy(
+                    isLoading = false,
+                    errorMessage = e.message ?: "خطا در برقراری ارتباط با سرور",
+                )
+            }
+        }
+    }
+
+    private fun getCategory(){
+        viewModelScope.launch {
+            _homeState.value = _homeState.value.copy(isLoading = true, errorMessage = null)
+            try {
+                val categories = productUseCase.getCategories()
+                _homeState.value = _homeState.value.copy(
+                    categories = categories,
                     isLoading = false,
                 )
             } catch (e: Exception) {

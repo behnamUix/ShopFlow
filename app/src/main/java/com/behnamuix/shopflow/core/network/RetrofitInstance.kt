@@ -11,8 +11,6 @@ object RetrofitProvider {
     // آدرس اصلی سرور (Base URL)
     private const val BASE_URL = "https://dummyjson.com/"
 
-    // اینترسپتور لاگ‌گیری برای نمایش اطلاعات درخواست و پاسخ در Logcat
-    // برای جلوگیری از تایم‌اوت سوکت موقع خواندن بدنه کامل پاسخ، لول لاگ روی HEADERS یا BASIC قرار می‌گیرد
     private val loggingInterceptor: HttpLoggingInterceptor by lazy {
         HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
