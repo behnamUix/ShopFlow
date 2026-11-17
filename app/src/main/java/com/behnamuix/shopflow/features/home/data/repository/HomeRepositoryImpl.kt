@@ -4,7 +4,9 @@ import android.util.Log
 import com.behnamuix.shopflow.features.home.data.remote.api.HomeApiService
 import com.behnamuix.shopflow.features.home.data.remote.dto.category.toDomain
 import com.behnamuix.shopflow.features.home.data.remote.dto.home.toDomain
+import com.behnamuix.shopflow.features.home.data.remote.dto.phone.toDomain
 import com.behnamuix.shopflow.features.home.domain.model.CategoryModel
+import com.behnamuix.shopflow.features.home.domain.model.PhoneModel
 import com.behnamuix.shopflow.features.home.domain.model.ProductModel
 import com.behnamuix.shopflow.features.home.domain.repository.HomeRepository
 import javax.inject.Inject
@@ -25,8 +27,8 @@ class HomeRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getPhones(): List<ProductModel> {
-        val response = homeApiService.getPhone()
+    override suspend fun getPhones(): List<PhoneModel> {
+        val response = homeApiService.searchPhones()
         return response.products.map {
             it.toDomain()
         }

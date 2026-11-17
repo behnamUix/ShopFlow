@@ -69,6 +69,7 @@ import com.behnamuix.shopflow.R
 import com.behnamuix.shopflow.features.home.data.remote.dto.home.Category
 import com.behnamuix.shopflow.features.home.data.remote.dto.home.FakeCategories
 import com.behnamuix.shopflow.features.home.data.remote.dto.home.MainCategory
+import com.behnamuix.shopflow.features.home.domain.model.PhoneModel
 
 import com.behnamuix.shopflow.features.home.domain.model.ProductModel
 import com.behnamuix.shopflow.ui.theme.Bakh
@@ -516,7 +517,7 @@ fun PhoneSection(title: String, homeState: HomeContract.HomeState) {
     ) {
         LazyRow(modifier = Modifier.fillMaxWidth()) {
             items(homeState.phones) {
-                ProductItemCard(it)
+                PhoneItemCard(it)
             }
         }
     }
@@ -703,37 +704,186 @@ fun ProductItemCard(item: ProductModel) {
     }
 }
 
-
 @Composable
-fun ItemCatCard(category: MainCategory) {
+fun PhoneItemCard(item: PhoneModel) {
 
-    Column(
+    val price = (item.price * 269_000).toLong()
 
-        modifier = Modifier.padding(2.dp)
+    OutlinedCard(
+        modifier = Modifier
+            .width(155.dp)
+            .height(235.dp)
+            .padding(4.dp),
+        shape = RoundedCornerShape(16.dp),
+        border = BorderStroke(1.dp, Color.White.copy(0.2f)),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.Transparent
+        )
     ) {
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(8.dp)
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp)
         ) {
-            Surface(shape = CircleShape) {
-                AsyncImage(
-                    model = category.image,
-                    contentScale = ContentScale.Crop,
-                    contentDescription = "",
-                    modifier = Modifier
-                        .size(60.dp)
-                )
+
+            // Discount
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            ) {
+                Card(
+                    shape = RoundedCornerShape(50.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = Color(0xFFFF7900)
+                    )
+                ) {
+                    Text(
+                        text = "${item.discountPercentage.roundToInt()}٪ تخفیف",
+                        modifier = Modifier.padding(
+                            horizontal = 5.dp,
+                            vertical = 2.dp
+                        ),
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold,
+                        style = MaterialTheme.typography.labelSmall.copy(
+                            fontSize = 9.sp
+                        )
+                    )
+                }
             }
-            Text(
-                category.title,
-                textAlign = TextAlign.Center,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.labelMedium,
-                color = Color(0xFFB0B0B0)
+
+            // Image
+            AsyncImage(
+                model = item.thumbnail,
+                contentDescription = item.title,
+                contentScale = ContentScale.Fit,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+                    .padding(vertical = 4.dp)
             )
+
+            // Title
+            Text(
+                text = item.title,
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Start,
+                color = Color.White,
+
+                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.bodySmall,
+                maxLines = 1
+            )
+
+            Spacer(Modifier.height(5.dp))
+
+            // Rating and stock
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "${item.rating}/5",
+                    color = Color.LightGray,
+                    style = MaterialTheme.typography.labelSmall.copy(
+                        fontSize = 9.sp
+                    )
+                )
+
+                Spacer(Modifier.weight(1f))
+
+                Card(
+                    shape = RoundedCornerShape(4.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = if (item.rating > 4)
+                            Color(0xFF4CAF50).copy(0.2f)
+                        else
+                            Color.Red.copy(0.2f)
+                    )
+                ) {
+                    Text(
+                        modifier = Modifier.padding(
+                            horizontal = 5.dp,
+                            vertical = 2.dp
+                        ),
+                        text = if (item.rating > 4) "موجود" else "ناموجود",
+                        color = if (item.rating > 4)
+                            Color(0xFF4CAF50)
+                        else
+                            Color.Red,
+                        style = MaterialTheme.typography.labelSmall.copy(
+                            fontSize = 9.sp
+                        )
+                    )
+                }
+            }
+
+            Spacer(Modifier.height(7.dp))
+
+            // Price and button
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(5.dp),
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = NumberFormat
+                            .getNumberInstance(Locale.US)
+                            .format(price),
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold,
+                        style = MaterialTheme.typography.labelSmall.copy(
+                            fontSize = 10.sp
+                        ),
+                        maxLines = 1
+                    )
+
+                    Text(
+                        "تومان",
+                        color = Color.LightGray,
+                        style = MaterialTheme.typography.labelSmall.copy(
+                            fontSize = 8.sp
+                        )
+                    )
+                }
+
+                VerticalDivider(
+                    thickness = 1.dp,
+                    color = Color.White,
+                    modifier = Modifier.height(18.dp)
+                )
+                OutlinedButton(
+                    enabled = item.rating > 4,
+                    onClick = {},
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(30.dp),
+                    contentPadding = PaddingValues(2.dp),
+                    shape = RoundedCornerShape(8.dp),
+                    border = BorderStroke(
+                        1.dp,
+                        Color(0xFFFF3434)
+                    )
+                ) {
+                    Text(
+                        "افزودن",
+                        color = Color.White,
+                        style = MaterialTheme.typography.labelSmall.copy(
+                            fontSize = 9.sp
+                        )
+                    )
+                }
+
+            }
         }
     }
 }
+
+
+
 
 

@@ -21,7 +21,7 @@ class HomeViewModel @Inject constructor(
         when (action) {
             is HomeContract.HomeAction.GetProducts -> getProducts()
             is HomeContract.HomeAction.GetCategories -> getCategory()
-            is HomeContract.HomeAction.GetPhones -> getCategory()
+            is HomeContract.HomeAction.GetPhones -> getPhones()
         }
     }
     private fun getPhones(){
