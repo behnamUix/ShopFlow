@@ -16,4 +16,9 @@ class HomeUseCase @Inject constructor(
         return repository.getCategories()
     }
 
+    suspend fun getPhones():List<ProductModel>{
+        return repository.getPhones()
+    }
+
+
 }

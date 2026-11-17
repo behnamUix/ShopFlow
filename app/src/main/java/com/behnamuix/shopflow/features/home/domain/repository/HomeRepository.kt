@@ -6,5 +6,7 @@ import com.behnamuix.shopflow.features.home.domain.model.ProductModel
 interface HomeRepository {
     suspend fun getProduct(): List<ProductModel>
 
-    suspend fun getCategories():List<CategoryModel>
+    suspend fun getCategories(): List<CategoryModel>
+
+    suspend fun getPhones(): List<ProductModel>
 }

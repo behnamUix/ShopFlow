@@ -21,9 +21,28 @@ class HomeViewModel @Inject constructor(
         when (action) {
             is HomeContract.HomeAction.GetProducts -> getProducts()
             is HomeContract.HomeAction.GetCategories -> getCategory()
+            is HomeContract.HomeAction.GetPhones -> getCategory()
         }
     }
+    private fun getPhones(){
+        viewModelScope.launch {
+            _homeState.value = _homeState.value.copy(isLoading = true, errorMessage = null)
+            try {
+                val phones = productUseCase.getPhones()
+                _homeState.value = _homeState.value.copy(
+                    phones = phones,
+                    isLoading = false,
+                )
+            } catch (e: Exception) {
 
+                e.printStackTrace()
+                _homeState.value = _homeState.value.copy(
+                    isLoading = false,
+                    errorMessage = e.message ?: "خطا در برقراری ارتباط با سرور",
+                )
+            }
+        }
+    }
     private fun getProducts() {
         viewModelScope.launch {
             _homeState.value = _homeState.value.copy(isLoading = true, errorMessage = null)

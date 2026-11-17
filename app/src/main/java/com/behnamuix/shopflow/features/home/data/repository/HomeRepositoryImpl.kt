@@ -14,13 +14,20 @@ class HomeRepositoryImpl @Inject constructor(
 ) : HomeRepository {
     override suspend fun getProduct(): List<ProductModel> {
         val response = homeApiService.getProducts()
-        Log.d("PRODUCTS",response.products.size.toString())
+        Log.d("PRODUCTS", response.products.size.toString())
         return response.products.map { it.toDomain() }
     }
 
     override suspend fun getCategories(): List<CategoryModel> {
-        val response=homeApiService.getCategories()
+        val response = homeApiService.getCategories()
         return response.categories.map {
+            it.toDomain()
+        }
+    }
+
+    override suspend fun getPhones(): List<ProductModel> {
+        val response = homeApiService.getPhone()
+        return response.products.map {
             it.toDomain()
         }
     }

@@ -8,11 +8,14 @@ object HomeContract {
         val products: List<ProductModel> = emptyList(),
         val isLoading: Boolean = false,
         val errorMessage: String? = null,
-        val categories:List<CategoryModel> = emptyList()
+        val categories:List<CategoryModel> = emptyList(),
+        val phones:List<ProductModel> = emptyList()
     )
 
     sealed interface HomeAction {
         data object GetProducts : HomeAction
         data object GetCategories: HomeAction
+
+        data object GetPhones: HomeAction
     }
 }
